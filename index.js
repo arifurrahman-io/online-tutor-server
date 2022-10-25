@@ -6,6 +6,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 
 const courses = require('./data/data.json');
+const courseCategory = require('./data/courseCategory.json');
 const blog = require('./data/blog.json');
 
 app.get('/', (req, res) => {
@@ -20,6 +21,20 @@ app.get('/blog', (req, res) => {
     res.send(blog);
 });
 
+app.get('/categories', (req, res) => {
+    res.send(courseCategory);
+})
+
+app.get('/category/:id', (req, res) => {
+    const id = req.params.id;
+    if (id === '4') {
+        res.send(courses);
+    } else {
+        const categoryCourse = courses.filter(c => c.category_id === id);
+        res.send(categoryCourse);
+    }
+})
+
 app.get('/course/:id', (req, res) => {
     const id = req.params.id;
     const getSingleCourse = courses?.find((course) => course.id == id);
@@ -27,14 +42,6 @@ app.get('/course/:id', (req, res) => {
         res.send('Data not found!');
     }
     res.send(getSingleCourse);
-});
-app.get('/category/:name', (req, res) => {
-    const name = req.params.name;
-    const getCategory = courses?.filter((c) => c.category == name);
-    if (!getCategory) {
-        res.send('Unavailable Category!');
-    }
-    res.send(getCategory);
 });
 
 app.listen(port, () => {
