@@ -6,6 +6,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 
 const courses = require('./data/data.json');
+const blog = require('./data/blog.json');
 
 app.get('/', (req, res) => {
     res.send('Server is Running');
@@ -13,6 +14,10 @@ app.get('/', (req, res) => {
 
 app.get('/courses', (req, res) => {
     res.send(courses);
+});
+
+app.get('/blog', (req, res) => {
+    res.send(blog);
 });
 
 app.get('/course/:id', (req, res) => {
