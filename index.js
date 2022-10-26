@@ -44,6 +44,18 @@ app.get('/course/:id', (req, res) => {
     res.send(getSingleCourse);
 });
 
+
+app.get('/checkout/:id', (req, res) => {
+    const id = req.params.id;
+    const getSingleCourse = courses?.find((course) => course.id == id);
+    if (!getSingleCourse) {
+        res.send('Data not found!');
+    }
+    res.send(getSingleCourse);
+});
+
+
+
 app.listen(port, () => {
     console.log('Server PORT 5000 Running')
 });
